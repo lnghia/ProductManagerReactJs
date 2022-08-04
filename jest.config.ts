@@ -3,7 +3,6 @@ module.exports = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
   collectCoverage: true,
-  coverageReporters: ["json", "lcov"],
 };
 
 export {};
