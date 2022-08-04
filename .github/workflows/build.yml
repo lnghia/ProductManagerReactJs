@@ -29,7 +29,7 @@ jobs:
       - name: Build
         run: npm run build --if-present
 
-  Unit-Tests:
+  Quality-Check:
     needs: Build
     runs-on: ubuntu-latest
     steps:
@@ -41,11 +41,6 @@ jobs:
         uses: ArtiomTr/jest-coverage-report-action@v2.0.9
         with:
           test-script: npm test
-
-  SonarScan:
-    needs: Unit-Tests
-    runs-on: ubuntu-latest
-    steps:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
