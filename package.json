@@ -25,9 +25,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test:develop": "DOTENV_CONFIG_PATH=.env.dev jest --setupFiles=dotenv/config",
-    "test:staging": "DOTENV_CONFIG_PATH=.env.stag jest --setupFiles=dotenv/config",
-    "test:production": "DOTENV_CONFIG_PATH=.env.prod jest --setupFiles=dotenv/config",
+    "test:develop": "DOTENV_CONFIG_PATH=.dev.env jest --setupFiles=dotenv/config",
+    "test:staging": "DOTENV_CONFIG_PATH=.stag.env jest --setupFiles=dotenv/config",
+    "test:production": "DOTENV_CONFIG_PATH=.prod.env jest --setupFiles=dotenv/config",
     "eject": "react-scripts eject",
     "start:develop": "env-cmd -f ./.dev.env react-scripts start",
     "build:develop": "env-cmd -f ./.dev.env npm run-script build",
