@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from "axios";
-import React from "react";
 import { API_BASE_URL } from "@/config";
 
 const AxiosClient = axios.create({
