@@ -3,12 +3,12 @@ import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
 
-import NavBar from "./components/NavBar";
-import Login from "./features/auth/pages/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Logout from "./features/auth/pages/Logout";
+import NavBar from "./presentation/shared/components/NavBar";
+import Login from "./presentation/authentication/pages/Login";
+import ProtectedRoute from "./presentation/shared/components/ProtectedRoute";
+import Logout from "./presentation/authentication/pages/Logout";
 
-import { ProtectedRouteProps } from "./components/ProtectedRoute";
+import { ProtectedRouteProps } from "./presentation/shared/components/ProtectedRoute";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/login",
