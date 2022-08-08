@@ -1,8 +1,8 @@
 import React, { FunctionComponent, ReactNode } from "react";
 
-import { authUsernameSelector } from "../redux/slices/UserSlice";
+import { authUsernameSelector } from "../../../application/redux/slices/UserSlice";
 import { useSelector } from "react-redux";
-import { Navigate, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export type ProtectedRouteProps = {
   authenticationPath: string;
