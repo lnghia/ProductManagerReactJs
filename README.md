@@ -52,6 +52,6 @@ However, you need to name the `.env` file correctly to get the app work. Make su
 
 | environment | name      |
 | ----------- | --------- |
-| develop     | .env.dev  |
-| staging     | .env.stag |
-| production  | .env.prod |
+| develop     | .dev.env  |
+| staging     | .stag.env |
+| production  | .prod.env |
