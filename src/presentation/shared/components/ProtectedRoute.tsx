@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from "react";
+import React from "react";
 
 import { authUsernameSelector } from "../../../application/redux/slices/UserSlice";
 import { useSelector } from "react-redux";
