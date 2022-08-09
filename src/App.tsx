@@ -9,6 +9,11 @@ import ProtectedRoute from "./presentation/shared/components/ProtectedRoute";
 import Logout from "./presentation/authentication/pages/Logout";
 
 import { ProtectedRouteProps } from "./presentation/shared/components/ProtectedRoute";
+import SideBar from "./presentation/shared/components/SideBar";
+
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toolbar from "@mui/material/Toolbar";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/login",
@@ -16,22 +21,30 @@ const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
 
 function App() {
   return (
-    <div>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+
       <NavBar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/logout"
-          element={
-            <ProtectedRoute
-              {...defaultProtectedRouteProps}
-              outlet={<Logout />}
-            />
-          }
-        />
-        <Route path="*" element={<p>Nothing here, 404!</p>} />
-      </Routes>
-    </div>
+
+      <SideBar />
+
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Toolbar />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/logout"
+            element={
+              <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                outlet={<Logout />}
+              />
+            }
+          />
+          <Route path="*" element={<p>Nothing here, 404!</p>} />
+        </Routes>
+      </Box>
+    </Box>
   );
 }
 
