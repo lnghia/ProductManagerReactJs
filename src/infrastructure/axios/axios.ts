@@ -23,17 +23,17 @@ const authRequestInterceptor = (config: AxiosRequestConfig) => {
 };
 
 AxiosClient.interceptors.request.use(authRequestInterceptor);
-AxiosClient.interceptors.response.use(
-  (response) => {
-    return response.data;
-  },
-  (error) => {
-    const message: string = error.response?.data?.message || error.message;
+// AxiosClient.interceptors.response.use(
+//   (response) => {
+//     return response.data;
+//   },
+//   (error) => {
+//     const message: string = error.response?.data?.message || error.message;
 
-    // raise a message box
+//     // raise a message box
 
-    return Promise.reject(error);
-  }
-);
+//     return Promise.reject(error);
+//   }
+// );
 
 export default AxiosClient;
