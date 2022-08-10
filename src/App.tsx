@@ -14,6 +14,7 @@ import SideBar from "./presentation/shared/components/SideBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
+import UserList from "./presentation/user/pages/UserList";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/login",
@@ -41,6 +42,16 @@ function App() {
               />
             }
           />
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                outlet={<UserList />}
+              />
+            }
+          />
+          <Route path="/users" element={<UserList />} />
           <Route path="*" element={<p>Nothing here, 404!</p>} />
         </Routes>
       </Box>

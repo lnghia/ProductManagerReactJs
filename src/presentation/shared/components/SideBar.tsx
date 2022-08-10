@@ -2,14 +2,16 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 import Toolbar from "@mui/material/Toolbar";
+
+import "./css/SideBar.css";
 
 const drawerWidth = 240;
 
@@ -30,16 +32,27 @@ export default function SideBar(props: Props) {
       <Toolbar />
       <Divider />
       <List>
-        {["Users", "Products"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        <a href="/users" style={{}}>
+          <ListItem key="users" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <SupervisorAccountIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary="Users" />
             </ListItemButton>
           </ListItem>
-        ))}
+        </a>
+
+        <a href="/products">
+          <ListItem key="products" disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <PrecisionManufacturingIcon />
+              </ListItemIcon>
+              <ListItemText primary="Products" />
+            </ListItemButton>
+          </ListItem>
+        </a>
       </List>
       <Divider />
     </div>
