@@ -18,6 +18,9 @@ import UserList from "./presentation/user/pages/UserList";
 import { useSelector } from "react-redux";
 import { isAdmin, isLoggedIn } from "./application/redux/slices/UserSlice";
 import { Navigate } from "react-router-dom";
+import ProductList from "./presentation/product/pages/ProductList";
+import CategoryList from "./presentation/category/pages/CategoryList";
+import CreateProduct from "./presentation/product/pages/CreateProduct";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/",
@@ -66,6 +69,9 @@ function App() {
               />
             }
           />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/add-product" element={<CreateProduct />} />
+          <Route path="/categories" element={<CategoryList />} />
           <Route path="*" element={<p>Nothing here, 404!</p>} />
         </Routes>
       </Box>
