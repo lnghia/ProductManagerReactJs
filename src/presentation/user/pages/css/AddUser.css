@@ -1,0 +1,13 @@
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.inputs-container {
+  width: 100%;
+  display: flex;
+}
+
+.inputs-inside {
+  flex-grow: 1;
+}
