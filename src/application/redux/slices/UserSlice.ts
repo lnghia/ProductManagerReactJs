@@ -1,3 +1,4 @@
+import { ADMIN } from "../../../application/types/constant";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
@@ -34,9 +35,9 @@ export const { setCurrentUserState, logoutUser } = userSlice.actions;
 
 export const authUsernameSelector = (state: any) => `${state.user.firstName} ${state.user.lastName}`;
 
-export const isLoggedIn = (state: any) =>  {
-  return state.user.isLogin;
-}
+export const isLoggedIn = (state: any) =>  state.user.isLogin;
+
+export const isAdmin = (state: any) =>  ADMIN === state.user.role;
 
 export const getCurrentUserRole = (state: any) => state.user.role;
 
