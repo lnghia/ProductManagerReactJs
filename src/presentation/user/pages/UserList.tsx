@@ -19,7 +19,7 @@ const initialValueForUsers: UserDto[] = [];
 
 function UserList() {
   const [currPage, setCurrPage] = useState(1);
-  const pageSize = 1;
+  const [pageSize, setPageSize] = useState(3);
   const [users, setUsers] = useState(initialValueForUsers);
   const [totalUsers, setTotalUsers] = useState(0);
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ function UserList() {
     };
 
     getUsers();
-  }, [currPage]);
+  }, [currPage, pageSize]);
 
   const travelToPage = (page: number) => {
     setCurrPage(page);
@@ -40,6 +40,10 @@ function UserList() {
 
   const handleAddUserOnClick = () => {
     navigate("/users/add_user");
+  };
+
+  const handleOnPageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize);
   };
 
   //use Pagination here, pass the function travelToPage to onPageChange, pass some other parameters, see Pagination.tsx for more details
@@ -87,6 +91,7 @@ function UserList() {
                 onPageChange={travelToPage}
                 pageSize={pageSize}
                 totalElements={totalUsers}
+                onRowsPerPageChange={handleOnPageSizeChange}
               />
             </TableRow>
           </TableFooter>
