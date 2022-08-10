@@ -15,19 +15,23 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import UserList from "./presentation/user/pages/UserList";
+import { useSelector } from "react-redux";
+import { isLoggedIn } from "./application/redux/slices/UserSlice";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/login",
 };
 
 function App() {
+  const isLogged: boolean = useSelector(isLoggedIn);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
       <NavBar />
 
-      <SideBar />
+      {isLogged && <SideBar />}
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />

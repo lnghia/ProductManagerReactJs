@@ -1,6 +1,8 @@
 import AxiosClient from "../axios/axios";
 import { PaginationResponseDto } from "./dtos/pagination";
 import { UserDto } from "./dtos/user";
+import { User } from "./dtos/UserState";
+const USER_URL = "/api/users";
 
 export const fetchUsers = async (page: number = 0, size: number = 5) => {
   try {
@@ -21,4 +23,9 @@ export const fetchUsers = async (page: number = 0, size: number = 5) => {
 
     return null;
   }
+};
+
+export const getCurrentUser = async () => {
+  const response = await AxiosClient.get(USER_URL + "/current-user");
+  return response;
 };
