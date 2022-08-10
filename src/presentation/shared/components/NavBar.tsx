@@ -11,6 +11,8 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useSelector } from "react-redux";
+import { authUsernameSelector, isLoggedIn } from "../../../application/redux/slices/UserSlice";
 
 // const pages: string[] = ["Products", "Pricing", "Blog"];
 const settings: string[] = ["Profile", "Account", "Dashboard", "Logout"];
@@ -22,6 +24,10 @@ const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+
+  const userLoginName = useSelector(authUsernameSelector);
+
+  const isLogged: boolean = useSelector(isLoggedIn);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -130,11 +136,11 @@ const NavBar = () => {
               </Button>
             ))} */}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
+          {isLogged && <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <span>{userLoginName}</span>
               </IconButton>
             </Tooltip>
             <Menu
@@ -160,6 +166,7 @@ const NavBar = () => {
               ))}
             </Menu>
           </Box>
+          }
         </Toolbar>
       </Container>
     </AppBar>
