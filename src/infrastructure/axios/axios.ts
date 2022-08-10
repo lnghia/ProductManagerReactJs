@@ -1,5 +1,6 @@
+import { ACCESS_TOKEN } from "../../application/types/constant";
 import axios, { AxiosRequestConfig } from "axios";
-import { API_BASE_URL } from "@/config";
+import { API_BASE_URL } from "../../config/index";
 
 const AxiosClient = axios.create({
   baseURL: API_BASE_URL,
@@ -8,7 +9,7 @@ const AxiosClient = axios.create({
 const authRequestInterceptor = (config: AxiosRequestConfig) => {
   // getting accessToken from local storage
   // maybe accessToken should be stored in cookies instead
-  const accessToken = window.localStorage.getItem("accessToken");
+  const accessToken = window.localStorage.getItem(ACCESS_TOKEN);
 
   if (accessToken) {
     if (config.headers) {
