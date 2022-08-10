@@ -1,6 +1,6 @@
 import { ACCESS_TOKEN } from "../../application/types/constant";
 import axios, { AxiosRequestConfig } from "axios";
-import { API_BASE_URL } from "../../config/index";
+import { API_BASE_URL } from "../../config";
 
 const AxiosClient = axios.create({
   baseURL: API_BASE_URL,

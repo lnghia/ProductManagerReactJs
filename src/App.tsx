@@ -23,7 +23,6 @@ const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
 };
 
 function App() {
-
   const isLogged: boolean = useSelector(isLoggedIn);
 
   return (
@@ -32,13 +31,12 @@ function App() {
 
       <NavBar />
 
-      {isLogged && <SideBar /> }
+      {isLogged && <SideBar />}
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/users" element={<UserList />} />
           <Route
             path="/logout"
             element={
@@ -48,6 +46,16 @@ function App() {
               />
             }
           />
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                outlet={<UserList />}
+              />
+            }
+          />
+          <Route path="/users" element={<UserList />} />
           <Route path="*" element={<p>Nothing here, 404!</p>} />
         </Routes>
       </Box>
