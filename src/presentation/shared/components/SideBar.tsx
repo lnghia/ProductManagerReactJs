@@ -12,6 +12,9 @@ import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturi
 import Toolbar from "@mui/material/Toolbar";
 
 import "./css/SideBar.css";
+import { useSelector } from "react-redux";
+import { isAdmin } from "../../../application/redux/slices/UserSlice";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -26,13 +29,13 @@ interface Props {
 export default function SideBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const isAdminRole = useSelector(isAdmin);
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        <a href="/users" style={{}}>
+        {isAdminRole && <Link to={"/users"} style={{}}>
           <ListItem key="users" disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -41,18 +44,20 @@ export default function SideBar(props: Props) {
               <ListItemText primary="Users" />
             </ListItemButton>
           </ListItem>
-        </a>
+        </Link>
+        }
 
-        <a href="/products">
-          <ListItem key="products" disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <PrecisionManufacturingIcon />
-              </ListItemIcon>
-              <ListItemText primary="Products" />
-            </ListItemButton>
-          </ListItem>
-        </a>
+        {!isAdminRole && <Link to={"/products"}>
+            <ListItem key="products" disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <PrecisionManufacturingIcon />
+                </ListItemIcon>
+                <ListItemText primary="Products" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        }
       </List>
       <Divider />
     </div>

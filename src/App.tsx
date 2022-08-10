@@ -16,14 +16,19 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import UserList from "./presentation/user/pages/UserList";
 import { useSelector } from "react-redux";
-import { isLoggedIn } from "./application/redux/slices/UserSlice";
+import { isAdmin, isLoggedIn } from "./application/redux/slices/UserSlice";
+import { Navigate } from "react-router-dom";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
-  authenticationPath: "/login",
+  authenticationPath: "/",
+  accessRole: "",
 };
 
 function App() {
   const isLogged: boolean = useSelector(isLoggedIn);
+  const isAdminRole: boolean = useSelector(isAdmin);
+  const defaultPage = (!isLogged ? <Navigate to="/login"/> : isAdminRole ? <Navigate to="/users"/> : <p>Products Page</p>);
+  
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -36,7 +41,22 @@ function App() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         <Routes>
+          <Route path="/" element={defaultPage} />
           <Route path="/login" element={<Login />} />
+          <Route path="/users" element={
+            <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            outlet={<UserList />}
+            accessRole="ROLE_ADMIN"
+          />
+          } />
+          <Route path="/products" element={
+            <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            outlet={<p>Products Page</p>}
+            accessRole="ROLE_USER"
+          />
+          } />
           <Route
             path="/logout"
             element={
@@ -46,16 +66,6 @@ function App() {
               />
             }
           />
-          <Route
-            path="/users"
-            element={
-              <ProtectedRoute
-                {...defaultProtectedRouteProps}
-                outlet={<UserList />}
-              />
-            }
-          />
-          <Route path="/users" element={<UserList />} />
           <Route path="*" element={<p>Nothing here, 404!</p>} />
         </Routes>
       </Box>
