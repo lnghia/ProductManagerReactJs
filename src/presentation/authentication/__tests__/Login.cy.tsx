@@ -1,4 +1,4 @@
-const { Login } = require("../pages/Login");
+import Login from "../pages/Login";
 
 describe("Login form test", () => {
   it("should have text 'Login App'", () => {
