@@ -2,6 +2,7 @@ import AxiosClient from "../axios/axios";
 import { PaginationResponseDto } from "./dtos/pagination";
 import { ProductDTO } from "./dtos/ProductDTO";
 import { ProductCreationDTO } from "./dtos/ProductCreationDTO";
+
 const PRODUCT_URL = "/api/products";
 
 export const fetchProducts = async (page: number = 0, size: number = 5) => {
@@ -37,5 +38,17 @@ export const createNewProduct = async (product: ProductCreationDTO) => {
       return null;
     }
   };
+  
+export const exportAllProductToCSV = async () => {
+    const response = AxiosClient.get(
+        `${PRODUCT_URL}/export-csv`,{headers: {'Content-Type': 'application/csv'}}
+    );
+    return response;
+}
 
-
+export const importProductFromCSVFile = async (form: FormData) => {
+    const response = AxiosClient.post(
+        `${PRODUCT_URL}/import-csv`, form
+    );
+    return response;
+}
