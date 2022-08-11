@@ -4,10 +4,12 @@ import { PaginationResponseDto } from "./dtos/pagination";
 import { UserDto } from "./dtos/user";
 const USER_URL = "/api/users";
 
-export const fetchUsers = async (page = 0, size = 5) => {
+export const fetchUsers = async (page = 0, size = 5, keyword = "") => {
   try {
     const response = await AxiosClient.get(
-      `/api/users?page=${page}&size=${size}&query=`
+      !keyword
+        ? `/api/users?page=${page}&size=${size}&query=`
+        : `/api/users?page=${page}&size=${size}&query=${keyword}`
     );
 
     const result: PaginationResponseDto<UserDto> = {
