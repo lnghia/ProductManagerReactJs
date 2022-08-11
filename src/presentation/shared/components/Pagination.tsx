@@ -11,6 +11,7 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 
 interface Props {
   onPageChange: (page: number) => void;
+  onRowsPerPageChange?: (pageSize: number) => void;
   totalElements: number;
   pageSize: number;
 }
@@ -98,6 +99,14 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 function Pagination(props: Props) {
   const [currPage, setCurrPage] = useState(1);
 
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (props.onRowsPerPageChange) {
+      props.onRowsPerPageChange(parseInt(event.target.value));
+    }
+  };
+
   const handleOnPageChange = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
@@ -108,7 +117,8 @@ function Pagination(props: Props) {
 
   return (
     <TablePagination
-      rowsPerPageOptions={[]}
+      rowsPerPageOptions={props.onRowsPerPageChange ? [3, 5, 10, 15, 20] : []}
+      onRowsPerPageChange={handleChangeRowsPerPage}
       count={props.totalElements}
       page={currPage - 1}
       rowsPerPage={props.pageSize}

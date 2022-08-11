@@ -11,34 +11,49 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, TableFooter } from "@mui/material";
 import Pagination from "../../shared/components/Pagination";
+import { useNavigate } from "react-router-dom";
+
+import "./css/UserList.css";
 
 const initialValueForUsers: UserDto[] = [];
 
 function UserList() {
   const [currPage, setCurrPage] = useState(1);
-  const pageSize = 1;
+  const [pageSize, setPageSize] = useState(3);
   const [users, setUsers] = useState(initialValueForUsers);
   const [totalUsers, setTotalUsers] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUsers = async () => {
-      let result = await fetchUsers(currPage - 1, pageSize);
+      const result = await fetchUsers(currPage - 1, pageSize);
       setUsers(result!.content);
       setTotalUsers(result!.totalElements);
     };
 
     getUsers();
-  }, [currPage]);
+  }, [currPage, pageSize]);
 
   const travelToPage = (page: number) => {
     setCurrPage(page);
   };
 
+  const handleAddUserOnClick = () => {
+    navigate("/users/add_user");
+  };
+
+  const handleOnPageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize);
+  };
+
   //use Pagination here, pass the function travelToPage to onPageChange, pass some other parameters, see Pagination.tsx for more details
 
   return (
-    <div>
-      <Button variant="contained">Add user</Button>
+    <div className="container">
+      <Button variant="contained" onClick={handleAddUserOnClick}>
+        Add user
+      </Button>
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -76,6 +91,7 @@ function UserList() {
                 onPageChange={travelToPage}
                 pageSize={pageSize}
                 totalElements={totalUsers}
+                onRowsPerPageChange={handleOnPageSizeChange}
               />
             </TableRow>
           </TableFooter>
