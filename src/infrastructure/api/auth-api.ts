@@ -1,11 +1,10 @@
 import AxiosClient from "../axios/axios";
 
 export const login = async (email: string, inputPassword: string) => {
-  let response = await AxiosClient.post("/login", {
-    username: email,
+  const response = await AxiosClient.post("/authenticate", {
+    email: email,
     password: inputPassword,
   });
-  let data = response.data.data;
-
+  const data = response.data;
   return data;
 };

@@ -8,21 +8,30 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useDispatch, useSelector } from "react-redux";
+import { authUsernameSelector, isLoggedIn, logoutUser } from "../../../application/redux/slices/UserSlice";
+import { useNavigate } from "react-router-dom";
+import { ACCESS_TOKEN } from "../../../application/types/constant";
 
-const pages: string[] = ["Products", "Pricing", "Blog"];
+// const pages: string[] = ["Products", "Pricing", "Blog"];
 const settings: string[] = ["Profile", "Account", "Dashboard", "Logout"];
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+
+  const userLoginName = useSelector(authUsernameSelector);
+
+  const isLogged: boolean = useSelector(isLoggedIn);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -34,13 +43,24 @@ const NavBar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-  const handleCloseUserMenu = () => {
+  
+  const logout = () => {
+    dispatch(logoutUser());
+    localStorage.removeItem(ACCESS_TOKEN);
+    navigate("/login");
+  }
+  const handleCloseUserMenu = (settingName: string) => {
     setAnchorElUser(null);
+    if (settingName === "Logout") {
+      logout();
+    }
   };
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -91,11 +111,11 @@ const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -118,7 +138,7 @@ const NavBar = () => {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {/* {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -126,13 +146,13 @@ const NavBar = () => {
               >
                 {page}
               </Button>
-            ))}
+            ))} */}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
+          {isLogged && <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <span className="username">{userLoginName}</span>
               </IconButton>
             </Tooltip>
             <Menu
@@ -152,12 +172,13 @@ const NavBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+          }
         </Toolbar>
       </Container>
     </AppBar>
