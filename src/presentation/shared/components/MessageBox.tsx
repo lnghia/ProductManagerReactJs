@@ -15,34 +15,25 @@ interface Props {
   message: string;
   open?: boolean;
   type?: messageType;
+  onClose: () => void;
 }
 
 export default function MessageBox({
   open = true,
   type = "info",
   message,
+  onClose,
 }: Props) {
   const [isOpen, setIsOpen] = React.useState(open);
-
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setIsOpen(false);
-  };
 
   return (
     <Snackbar
       open={isOpen}
-      autoHideDuration={6000}
-      onClose={handleClose}
+      autoHideDuration={1000}
+      onClose={onClose}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
     >
-      <Alert onClose={handleClose} severity={type} sx={{ width: "100%" }}>
+      <Alert onClose={onClose} severity={type} sx={{ width: "100%" }}>
         {message}
       </Alert>
     </Snackbar>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
@@ -21,6 +21,9 @@ import { Navigate } from "react-router-dom";
 import ProductList from "./presentation/product/pages/ProductList";
 import CategoryList from "./presentation/category/pages/CategoryList";
 import CreateProduct from "./presentation/product/pages/CreateProduct";
+import AddUser from "./presentation/user/pages/AddUser";
+import { Message } from "./application/types/message";
+import { messageBoxSelector } from "./application/redux/slices/MessageBoxSlice";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/",
@@ -30,8 +33,14 @@ const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
 function App() {
   const isLogged: boolean = useSelector(isLoggedIn);
   const isAdminRole: boolean = useSelector(isAdmin);
-  const defaultPage = (!isLogged ? <Navigate to="/login"/> : isAdminRole ? <Navigate to="/users"/> : <p>Products Page</p>);
-  
+  const message: Message = useSelector(messageBoxSelector);
+  const defaultPage = !isLogged ? (
+    <Navigate to="/login" />
+  ) : isAdminRole ? (
+    <Navigate to="/users" />
+  ) : (
+    <p>Products Page</p>
+  );
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -41,25 +50,39 @@ function App() {
 
       {isLogged && <SideBar />}
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3 }}
+        display="flex"
+        justifyContent="center"
+        // alignItems="center"
+        height="100vh"
+        style={{ borderColor: "red", borderStyle: "solid" }}
+      >
         <Toolbar />
         <Routes>
           <Route path="/" element={defaultPage} />
           <Route path="/login" element={<Login />} />
-          <Route path="/users" element={
-            <ProtectedRoute
-            {...defaultProtectedRouteProps}
-            outlet={<UserList />}
-            accessRole="ROLE_ADMIN"
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                outlet={<UserList />}
+                accessRole="ROLE_ADMIN"
+              />
+            }
           />
-          } />
-          <Route path="/products" element={
-            <ProtectedRoute
-            {...defaultProtectedRouteProps}
-            outlet={<p>Products Page</p>}
-            accessRole="ROLE_USER"
+          <Route
+            path="/products"
+            element={
+              <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                outlet={<p>Products Page</p>}
+                accessRole="ROLE_USER"
+              />
+            }
           />
-          } />
           <Route
             path="/logout"
             element={
@@ -72,6 +95,15 @@ function App() {
           <Route path="/products" element={<ProductList />} />
           <Route path="/add-product" element={<CreateProduct />} />
           <Route path="/categories" element={<CategoryList />} />
+          <Route
+            path="/users/add_user"
+            element={
+              <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                outlet={<AddUser />}
+              />
+            }
+          />
           <Route path="*" element={<p>Nothing here, 404!</p>} />
         </Routes>
       </Box>

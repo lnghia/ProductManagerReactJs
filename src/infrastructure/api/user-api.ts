@@ -1,25 +1,25 @@
+import { UserCreationDto } from "./dtos/UserCreationDto";
 import AxiosClient from "../axios/axios";
 import { PaginationResponseDto } from "./dtos/pagination";
 import { UserDto } from "./dtos/user";
-import { User } from "./dtos/UserState";
 const USER_URL = "/api/users";
 
-export const fetchUsers = async (page: number = 0, size: number = 5) => {
+export const fetchUsers = async (page = 0, size = 5) => {
   try {
-    let response = await AxiosClient.get(
+    const response = await AxiosClient.get(
       `/api/users?page=${page}&size=${size}&query=`
     );
 
-    let result: PaginationResponseDto<UserDto> = {
+    const result: PaginationResponseDto<UserDto> = {
       content: response.data,
       totalPages: Math.ceil(parseInt(response.headers["x-total-count"]) / size),
       totalElements: parseInt(response.headers["x-total-count"]),
     };
 
     return result;
-  } catch (error) {
-    // toastr.error(error.response.data.errors);
-    console.log(error);
+  } catch (error: any) {
+    // toast(error.response.data);
+    console.log(error.response.data);
 
     return null;
   }
@@ -28,4 +28,19 @@ export const fetchUsers = async (page: number = 0, size: number = 5) => {
 export const getCurrentUser = async () => {
   const response = await AxiosClient.get(USER_URL + "/current-user");
   return response;
+};
+
+export const createNewUser = async (user: UserCreationDto) => {
+  try {
+    const response = await AxiosClient.post("/api/users", user);
+
+    alert("New user has been created successfully.");
+
+    return response.data;
+  } catch (error: any) {
+    // toast(error.response.data);
+    alert(error.response.data);
+
+    return null;
+  }
 };
