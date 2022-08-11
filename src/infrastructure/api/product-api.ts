@@ -1,6 +1,7 @@
 import AxiosClient from "../axios/axios";
 import { PaginationResponseDto } from "./dtos/pagination";
 import { ProductDTO } from "./dtos/ProductDTO";
+import { ProductCreationDTO } from "./dtos/ProductCreationDTO";
 const PRODUCT_URL = "/api/products";
 
 export const fetchProducts = async (page: number = 0, size: number = 5) => {
@@ -20,4 +21,21 @@ export const fetchProducts = async (page: number = 0, size: number = 5) => {
         return null;
     }
 }
+
+
+export const createNewProduct = async (product: ProductCreationDTO) => {
+    try {
+      const response = await AxiosClient.post("/api/products", product);
+  
+      alert("New product has been created successfully.");
+  
+      return response.data;
+    } catch (error: any) {
+      // toast(error.response.data);
+      alert(error.response.data);
+  
+      return null;
+    }
+  };
+
 

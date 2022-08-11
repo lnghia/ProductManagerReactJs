@@ -10,12 +10,13 @@ import Paper from '@mui/material/Paper';
 import { TableFooter, Typography } from '@mui/material';
 import Pagination from "../../shared/components/Pagination";
 
-
 import { fetchProducts } from '../../../infrastructure/api/product-api';
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { UserDto } from "@/infrastructure/api/dtos/user";
-import { ProductDTO } from "@/infrastructure/api/dtos/ProductDTO";
+import { ProductDTO } from "../../../infrastructure/api/dtos/ProductDTO";
+import { CategoryDTO } from "../../../infrastructure/api/dtos/CategoryDTO";
+import { fetchCategories } from "../../../infrastructure/api/category-api";
+import "../../shared/components/css/Table.css";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,23 +39,29 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
 
 const initialValueForProducts: ProductDTO[] = [];
+const initialValueForCategories: CategoryDTO[] = [];
 
 function ProductList() {
     const pageSize = 5;
     const [currPage, setCurrPage] = useState(1);
     const [products, setProducts] = useState(initialValueForProducts)
+    const [categories, setCategories] = useState(initialValueForCategories);
     const [totalProducts, setTotalProducts] = useState(0);
 
     const navigate = useNavigate();
 
     useEffect(() => {
       const getProducts = async () => {
-        let result = await fetchProducts(currPage - 1, pageSize);
-        setProducts(result!.content);
-        setTotalProducts(result!.totalElements);
+        const products = await fetchProducts(currPage - 1, pageSize);
+        setProducts(products!.content);
+        setTotalProducts(products!.totalElements);
       };
-  
+      const getCategories = async () => {
+        const categoriesList = await fetchCategories();
+        setCategories(categoriesList);
+      };
       getProducts();
+      getCategories();
     }, [currPage]);
 
     const travelToPage = (page: number) => {
@@ -64,10 +71,20 @@ function ProductList() {
     const addProduct = () => {
       navigate('/add-product');
     }
-   
 
+    function searchCategoryById(id: number) : string {
+        if (!id) {
+          ;
+        }
+        const category = categories.find(data => data.id == id);
+        if (typeof category !== 'undefined') {
+          return category.name;
+        }
+        return "";
+    }
+   
     return (
-        <div>
+        <div className="container">
             <Typography align="center" variant="h3">List Product</Typography>
             <Button variant="contained" onClick={addProduct}>Add Product</Button>
 
@@ -89,7 +106,7 @@ function ProductList() {
                     <StyledTableCell align="right">{product.price}$</StyledTableCell>
                     <StyledTableCell align="right">{product.description}</StyledTableCell>
                     <StyledTableCell align="right">{product.createdDate}</StyledTableCell>
-                    <StyledTableCell align="right">{product.categoryId}</StyledTableCell>
+                    <StyledTableCell align="right">{searchCategoryById(product.categoryId)}</StyledTableCell>
                     </StyledTableRow>
                 ))}
                 </TableBody>

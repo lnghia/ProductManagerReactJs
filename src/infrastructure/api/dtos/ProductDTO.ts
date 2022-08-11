@@ -1,8 +1,8 @@
 export interface ProductDTO {
-    id: number;
+    id?: number;
     name: string;
     price: string;
-    description: boolean;
+    description: string;
     createdDate?: string;
-    categoryId: string;
+    categoryId: number;
 }

@@ -1,5 +1,5 @@
 import AxiosClient from "../axios/axios";
-import { CategoryDTO } from "./dtos/CategoryDTO";
+import { CategoryCreationDTO } from "./dtos/CategoryCreationDTO";
 
 export const fetchCategories = async () => {
     try {
@@ -10,3 +10,18 @@ export const fetchCategories = async () => {
         return null;
     }
 }
+
+export const createNewCategory = async (category: CategoryCreationDTO) => {
+    try {
+      const response = await AxiosClient.post("/api/categories", category);
+  
+      alert("New category has been created successfully.");
+  
+      return response.data;
+    } catch (error: any) {
+      // toast(error.response.data);
+      alert(error.response.data);
+  
+      return null;
+    }
+  };

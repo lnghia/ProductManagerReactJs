@@ -1,18 +1,19 @@
 import { ClassNames } from '@emotion/react';
 import { Button, Container, TextField, Typography } from '@mui/material';
-import React, { Component, useState } from 'react';
-import { createProduct } from '../../../application/services/ProductService';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { CategoryCreationDTO } from '../../../infrastructure/api/dtos/CategoryCreationDTO';
+import { createNewCategory } from '../../../infrastructure/api/category-api';
+import "../../shared/components/css/Table.css";
 
-export default function CreateProductComponent() {
+export default function CreateCategory(this: any) {
 
     const [name, setName] = useState('')
-    const [description, setDescrition] = useState('')
     const [nameError, setNameError] = useState(false)
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLInputElement | HTMLFormElement>) => {
         e.preventDefault()
 
         setNameError(false)
@@ -20,41 +21,33 @@ export default function CreateProductComponent() {
             setNameError(true)
         }
 
-        if (name && description) {
-            let product = {name: name, price: 13, description: description, categoryId: 3};
-            console.log(product);
-            let result = createProduct(product);
-            console.log(result);
-        }
-    }
+        const newCategory: CategoryCreationDTO = {
+          name: name,
+        };
+    
+        const createCategory = async (category: CategoryCreationDTO) => {
+          await createNewCategory(category);
+        };
+    
+        createCategory(newCategory);
+      };
 
     const handleCancel = () => {
-        navigate('/products');
+        navigate('/categories');
     }
 
     return (
         <Container>
-            <Typography align="center" variant="h3">
-                Create New Product
-            </Typography>
+            <Typography align="center" variant="h3">Create New Category</Typography>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
                 <TextField
                     onChange={(e) => setName(e.target.value)}
-                    label="Product Name"
+                    label="Category name"
                     variant='outlined'
                     color='secondary'
                     fullWidth
                     required
                     error={nameError}
-                />
-                <TextField
-                    onChange={(e) => setDescrition(e.target.value)}
-                    label="Description"
-                    variant='outlined'
-                    color='secondary'
-                    fullWidth
-                    multiline
-                    rows={4}
                 />
                 <Button
                     type="submit"
@@ -65,7 +58,6 @@ export default function CreateProductComponent() {
                     variant='outlined'
                 >Cancel</Button>
             </form>
-            
 
         </Container>
     );
