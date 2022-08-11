@@ -26,6 +26,7 @@ const initialState: LoginFormState = {
 
 const Login = () => {
   const [state, setState] = useState(initialState);
+  const [isCheckingUser, setIsCheckingUser] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const Login = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     if (accessToken) {
+      setIsCheckingUser(true);
       getAndSaveUserLoggedInfo();
     }
   }, []);
@@ -67,12 +69,13 @@ const Login = () => {
       } else {
         navigate("/products");
       }
+      setIsCheckingUser(false)
     });
   };
 
   return (
     <form noValidate autoComplete="off" style={{ alignSelf: "center" }}>
-      <Card>
+      {!isCheckingUser && <Card>
         <CardHeader title="Login App" />
         <CardContent>
           {errorMessage && (
@@ -112,6 +115,7 @@ const Login = () => {
           </Button>
         </CardActions>
       </Card>
+        }
     </form>
   );
 };
