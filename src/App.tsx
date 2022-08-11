@@ -54,7 +54,6 @@ function App() {
         justifyContent="center"
         // alignItems="center"
         height="100vh"
-        style={{ borderColor: "red", borderStyle: "solid" }}
       >
         <Toolbar />
         <Routes>
