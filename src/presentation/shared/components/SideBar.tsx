@@ -9,6 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
+import CategoryIcon from '@mui/icons-material/Category';
 import Toolbar from "@mui/material/Toolbar";
 
 import "./css/SideBar.css";
@@ -58,6 +59,18 @@ export default function SideBar(props: Props) {
             </ListItem>
           </Link>
         }
+        {!isAdminRole && <Link to={"/categories"}>
+            <ListItem key="categories" disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <CategoryIcon />
+                </ListItemIcon>
+                <ListItemText primary="Categories" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+        }
+
       </List>
       <Divider />
     </div>
