@@ -25,7 +25,6 @@ import AddUser from "./presentation/user/pages/AddUser";
 import { Message } from "./application/types/message";
 import { messageBoxSelector } from "./application/redux/slices/MessageBoxSlice";
 import CreateCategory from "./presentation/category/pages/CreateCategory";
-import ProductList from "./presentation/product/pages/ProductList";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/",
