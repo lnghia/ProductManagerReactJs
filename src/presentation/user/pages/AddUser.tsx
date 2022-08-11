@@ -35,7 +35,24 @@ export default function AddUser() {
     setSelectedRole(parseInt(event.target.value));
   };
 
+  const valide = () => {
+    return (
+      firstName &&
+      lastName &&
+      email &&
+      selectedRole &&
+      password &&
+      confirmPassword
+    );
+  };
+
   const handleSubmit = () => {
+    if (!valide()) {
+      alert("Please fill out all the required fields.");
+
+      return;
+    }
+
     const newUser: UserCreationDto = {
       id: 1,
       firstName: firstName,
