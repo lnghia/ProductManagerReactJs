@@ -142,6 +142,7 @@ export default function AddUser() {
       </div>
       <div className="inputs-container">
         <TextField
+          type={'password'}
           required
           id="outlined-required"
           label="Password"
@@ -151,6 +152,7 @@ export default function AddUser() {
       </div>
       <div className="inputs-container">
         <TextField
+          type={'password'}
           required
           id="outlined-required"
           label="Confirm password"
