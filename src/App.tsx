@@ -21,6 +21,7 @@ import { Navigate } from "react-router-dom";
 import AddUser from "./presentation/user/pages/AddUser";
 import { Message } from "./application/types/message";
 import { messageBoxSelector } from "./application/redux/slices/MessageBoxSlice";
+import ProductList from "./presentation/product/pages/ProductList";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/",
@@ -74,7 +75,7 @@ function App() {
             element={
               <ProtectedRoute
                 {...defaultProtectedRouteProps}
-                outlet={<p>Products Page</p>}
+                outlet={<ProductList/>}
                 accessRole="ROLE_USER"
               />
             }
