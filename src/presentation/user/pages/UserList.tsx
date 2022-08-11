@@ -12,6 +12,10 @@ import Paper from "@mui/material/Paper";
 import { Button, TableFooter } from "@mui/material";
 import Pagination from "../../shared/components/Pagination";
 import { useNavigate } from "react-router-dom";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
 
 import "./css/UserList.css";
 
@@ -22,17 +26,18 @@ function UserList() {
   const [pageSize, setPageSize] = useState(3);
   const [users, setUsers] = useState(initialValueForUsers);
   const [totalUsers, setTotalUsers] = useState(0);
+  const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUsers = async () => {
-      const result = await fetchUsers(currPage - 1, pageSize);
+      const result = await fetchUsers(currPage - 1, pageSize, keyword);
       setUsers(result!.content);
       setTotalUsers(result!.totalElements);
     };
 
     getUsers();
-  }, [currPage, pageSize]);
+  }, [currPage, pageSize, keyword]);
 
   const travelToPage = (page: number) => {
     setCurrPage(page);
@@ -46,13 +51,43 @@ function UserList() {
     setPageSize(newPageSize);
   };
 
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setKeyword(event.target.value);
+    // setCurrPage(1);
+  };
+
   //use Pagination here, pass the function travelToPage to onPageChange, pass some other parameters, see Pagination.tsx for more details
 
   return (
     <div className="container">
-      <Button variant="contained" onClick={handleAddUserOnClick}>
-        Add user
-      </Button>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Button variant="contained" onClick={handleAddUserOnClick}>
+          Add user
+        </Button>
+
+        <Paper
+          component="form"
+          sx={{
+            p: "2px 4px",
+            display: "flex",
+            alignItems: "center",
+            width: 400,
+          }}
+        >
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search Names"
+            inputProps={{ "aria-label": "search names" }}
+            onChange={handleSearchInputChange}
+          />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+            <SearchIcon />
+          </IconButton>
+        </Paper>
+      </div>
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
