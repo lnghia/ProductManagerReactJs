@@ -54,7 +54,7 @@ export default function AddUser() {
     }
 
     const newUser: UserCreationDto = {
-      id: 1,
+      id: null,
       firstName: firstName,
       lastName: lastName,
       email: email,

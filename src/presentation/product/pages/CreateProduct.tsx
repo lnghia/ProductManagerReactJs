@@ -5,7 +5,7 @@ import { createNewProduct } from '../../../infrastructure/api/product-api';
 import "../../shared/components/css/Table.css";
 import { CategoryDTO } from "../../../infrastructure/api/dtos/CategoryDTO";
 import { fetchCategories } from "../../../infrastructure/api/category-api";
-
+import "../../shared/components/css/Table.css";
 
 interface Role {
   name: string;
@@ -72,7 +72,7 @@ export default function CreateProduct() {
     }
 
     return (
-        <Container>
+        <Container className="container">
             <Typography align="center" variant="h3">
                 Create New Product
             </Typography>

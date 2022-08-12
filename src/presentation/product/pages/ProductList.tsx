@@ -132,12 +132,12 @@ function ProductList() {
         <div className="container">
             <Typography align="center" variant="h3">List Product</Typography>
             <div className="w-100 header-btn">
-              <Button variant="outlined" onClick={exportProduct} color="success" className="export-btn">Export Product</Button>
-              <Button variant="contained" onClick={openDialogImportProduct}>Import Product</Button>
+              <Button variant="contained" onClick={addProduct} className="btn">Add Product</Button>
+              <Button variant="outlined" onClick={exportProduct} color="success" className="btn">Export Product</Button>
+              <Button variant="contained" onClick={openDialogImportProduct} color="secondary">Import Product</Button>
               <ImportCSVDialog isOpen={openDialog} closeDialog={closeDialog}/>
             </div>
-            <Button variant="contained" onClick={addProduct}>Add Product</Button>
-
+            
             <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>

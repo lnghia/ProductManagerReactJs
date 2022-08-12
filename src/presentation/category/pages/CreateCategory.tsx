@@ -37,7 +37,7 @@ export default function CreateCategory(this: any) {
     }
 
     return (
-        <Container>
+        <Container className="container">
             <Typography align="center" variant="h3">Create New Category</Typography>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
                 <TextField
