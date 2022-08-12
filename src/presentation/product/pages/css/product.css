@@ -1,7 +1,8 @@
 .header-btn {
     margin-top: 100px;
+    margin-bottom: 15px;
 }
 
-.export-btn {
+.btn {
     margin-right: 10px !important;
 }
