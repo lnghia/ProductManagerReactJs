@@ -20,11 +20,9 @@ import { isAdmin, isLoggedIn } from "./application/redux/slices/UserSlice";
 import { Navigate } from "react-router-dom";
 import ProductList from "./presentation/product/pages/ProductList";
 import CategoryList from "./presentation/category/pages/CategoryList";
-import CreateProduct from "./presentation/product/pages/CreateProduct";
 import AddUser from "./presentation/user/pages/AddUser";
 import { Message } from "./application/types/message";
 import { messageBoxSelector } from "./application/redux/slices/MessageBoxSlice";
-import CreateCategory from "./presentation/category/pages/CreateCategory";
 
 const defaultProtectedRouteProps: Omit<ProtectedRouteProps, "outlet"> = {
   authenticationPath: "/",
@@ -84,31 +82,11 @@ function App() {
             }
           />
           <Route
-            path="/add-product"
-            element={
-              <ProtectedRoute
-                {...defaultProtectedRouteProps}
-                outlet={<CreateProduct />}
-                accessRole="ROLE_USER"
-              />
-            }
-          />
-          <Route
             path="/categories"
             element={
               <ProtectedRoute
                 {...defaultProtectedRouteProps}
                 outlet={<CategoryList />}
-                accessRole="ROLE_USER"
-              />
-            }
-          />
-          <Route
-            path="/add-category"
-            element={
-              <ProtectedRoute
-                {...defaultProtectedRouteProps}
-                outlet={<CreateCategory />}
                 accessRole="ROLE_USER"
               />
             }

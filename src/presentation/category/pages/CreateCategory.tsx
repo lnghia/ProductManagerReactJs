@@ -1,17 +1,13 @@
-import { ClassNames } from '@emotion/react';
-import { Button, Container, TextField, Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import { CategoryCreationDTO } from '../../../infrastructure/api/dtos/CategoryCreationDTO';
 import { createNewCategory } from '../../../infrastructure/api/category-api';
 import "../../shared/components/css/Table.css";
+import ImportDialogProps from '@/presentation/shared/ImportDialogProps';
 
-export default function CreateCategory(this: any) {
-
+const CreateCategory = (props: ImportDialogProps) => {
     const [name, setName] = useState('')
     const [nameError, setNameError] = useState(false)
-
-    const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLInputElement | HTMLFormElement>) => {
         e.preventDefault()
@@ -30,16 +26,24 @@ export default function CreateCategory(this: any) {
         };
     
         createCategory(newCategory);
+        props.closeDialog(null);
       };
 
-    const handleCancel = () => {
-        navigate('/categories');
-    }
+      const { isOpen } = props;
+
+      const handleClose = () => {
+          props.closeDialog(null);
+      };
+  
 
     return (
-        <Container className="container">
-            <Typography align="center" variant="h3">Create New Category</Typography>
+        <Dialog open={isOpen} onClose={handleClose}>
+            <DialogTitle>
+            Create New Category
+            </DialogTitle>
+
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
+                <DialogContent>
                 <TextField
                     onChange={(e) => setName(e.target.value)}
                     label="Category name"
@@ -49,16 +53,22 @@ export default function CreateCategory(this: any) {
                     required
                     error={nameError}
                 />
-                <Button
-                    type="submit"
-                    variant='contained'
-                >Save</Button>
-                <Button
-                    onClick={handleCancel}
-                    variant='outlined'
-                >Cancel</Button>
-            </form>
 
-        </Container>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        type="submit"
+                        variant='contained'
+                    >Save</Button>
+                    <Button
+                        onClick={handleClose}
+                        variant='outlined'
+                    >Cancel</Button>
+                </DialogActions>
+            </form>
+        </Dialog>
     );
 }
+
+
+export default CreateCategory;

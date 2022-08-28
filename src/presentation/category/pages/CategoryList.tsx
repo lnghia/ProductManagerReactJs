@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,6 +12,7 @@ import { fetchCategories } from "../../../infrastructure/api/category-api";
 import { useNavigate } from "react-router-dom";
 import { CategoryDTO } from "../../../infrastructure/api/dtos/CategoryDTO";
 import { styled } from '@mui/material/styles';
+import CreateCategory from "./CreateCategory";
 
 
 const initialValueForCategories: CategoryDTO[] = [];
@@ -28,27 +29,28 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 function CategoryList() {
   const [categories, setCategories] = useState(initialValueForCategories);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getCategories = async () => {
-      const result = await fetchCategories();
-      setCategories(result);
-    };
+    fetchCategories().then(res => setCategories(res));
+  }, [categories]);
 
-    getCategories();
-  }, []);
+  const openDialogCreateCatagory = () => {
+    setOpenDialog(true);
+  }
 
-  const addCategory = () => {
-    navigate('/add-category');
+  const closeDialog = () => {
+    setOpenDialog(false);
   }
 
 
   return (
     <div className="container">
       <Typography align="center" variant="h3">List Category</Typography>
-      <Button variant="contained" onClick={addCategory}>Add category</Button>
+      <Button variant="contained" onClick={openDialogCreateCatagory}>Add category</Button>
+      <CreateCategory isOpen={openDialog} closeDialog={closeDialog} />
       <TableContainer component={Paper} sx={{ maxWidth: 250 }}>
         <Table sx={{ maxWidth: 250 }} aria-label="simple table">
           <TableHead>
